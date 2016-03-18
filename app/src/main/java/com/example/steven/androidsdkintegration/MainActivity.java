@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.deltadna.android.sdk.DDNA;
+import com.deltadna.android.sdk.Event;
+
 public class MainActivity extends AppCompatActivity {
     String TAG = "MainActivity";
 
@@ -16,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         final TextView textLabel = (TextView) findViewById(R.id.textLabel);
         Button startSdkButton = (Button) findViewById(R.id.StartSDK);
-        Button sendEventButton = (Button) findViewById(R.id.sendEvent);
+        Button simpleEventButton = (Button) findViewById(R.id.simpleEvent);
         Button upLoadEventsButton = (Button) findViewById(R.id.uploadEvents);
         Button newSessionButton = (Button) findViewById(R.id.newSession);
 
@@ -24,20 +27,31 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "startSDK");
-                textLabel.setText("sessionId");
+                DDNA.instance().startSdk();
+                String userId = DDNA.instance().getUserId();
+                Log.d(TAG, "SDK started with userID " + userId);
+                textLabel.setText("SDK started with userId: " + userId);
             }
         });
 
-        sendEventButton.setOnClickListener(new View.OnClickListener() {
+        simpleEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "record event");
+                Log.d(TAG, "record simple event");
+                DDNA.instance().recordEvent(
+                        new Event("options")
+                        .putParam("action","click")
+                        .putParam("option","uselessButton")
+                );
+                textLabel.setText("options event recorded");
             }
+
         });
 
         upLoadEventsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                DDNA.instance().upload();
                 Log.d(TAG, "upload events");
             }
         });
@@ -46,11 +60,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "new session");
-                textLabel.setText("new sessionId");
-
+                String oldSessionId = DDNA.instance().getSessionId();
+                DDNA.instance().newSession();
+                String newSessionId = DDNA.instance().getSessionId();
+                Log.d(TAG, "New session started, old sessionID = "+oldSessionId+" new sessionID: "+newSessionId);
+                textLabel.setText("new sessionId:"+newSessionId);
             }
         });
 
-
     }
+
+    @Override
+    public void onDestroy() {
+        DDNA.instance().stopSdk();
+
+        super.onDestroy();
+    }
+
+
 }
