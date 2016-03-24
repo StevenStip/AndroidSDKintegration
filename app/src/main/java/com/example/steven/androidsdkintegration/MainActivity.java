@@ -15,6 +15,9 @@ import com.deltadna.android.sdk.Product;
 import com.deltadna.android.sdk.Transaction;
 import com.deltadna.android.sdk.listeners.ImageMessageListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
@@ -117,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "Simple engage");
                 DDNA.instance().requestEngagement(new Engagement("testDecisionPoint")
                                 .putParam("action", "simple"),
-                        new simpleEngagementListener());
+                        new simpleEngagementListener(textLabel));
                 String userId = DDNA.instance().getUserId();
                 Log.d(TAG, "SDK started with userID " + userId);
                 textLabel.setText("SDK started with userId: " + userId);
@@ -130,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "Param engage");
                 DDNA.instance().requestEngagement(new Engagement("testDecisionPoint")
                                 .putParam("action", "param"),
-                        new paramEngagementListener());
+                        new paramEngagementListener(textLabel));
                 String userId = DDNA.instance().getUserId();
                 Log.d(TAG, "SDK started with userID " + userId);
                 textLabel.setText("SDK started with userId: " + userId);
@@ -142,12 +145,23 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "Image engage");
-                DDNA.instance().requestImageMessage(new Engagement("testDecisionfoint")
+                DDNA.instance().requestImageMessage(new Engagement("testDecisionPoint")
                                 .putParam("action", "image"),
                         new ImageMessageListener(MainActivity.this, 10) {
                             @Override
                             public void onFailure(Throwable throwable) {
 
+                            }
+
+                            @Override
+                            public void onSuccess(JSONObject result) {
+                                super.onSuccess(result);
+                                Log.d(TAG, "onSuccess: reached past parent");
+                                try {
+                                    Log.d(TAG, result.toString(4));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
 
                             @Override
