@@ -12,8 +12,8 @@ public class deltaDnaApp extends Application {
     public void onCreate(){
         super.onCreate();
         DDNA.initialise(new DDNA.Configuration(this, "22079697190426055695055037414340",
-                "http://192.168.30.44:8080/collect/api",
-                //"http://collect4792jmprb.deltadna.net/collect/api",
+                //"http://192.168.30.44:8080/collect/api",
+                "http://collect4792jmprb.deltadna.net/collect/api",
                 "http://engage4792jmprb.deltadna.net"));
     }
 }

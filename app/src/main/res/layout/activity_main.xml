@@ -20,30 +20,68 @@
         android:id="@+id/StartSDK"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:text="Start SDK"/>
 
     <Button
         android:id="@+id/simpleEvent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:text="Simple Event"/>
 
     <Button
         android:id="@+id/complexEvent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:text="Complex event"/>
 
     <Button
         android:id="@+id/uploadEvents"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:text="upload Events"/>
+
+    <Button
+        android:id="@+id/simpleEngage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="simple engage"/>
+    <Button
+        android:id="@+id/paramEngage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="param engage"/>
+    <Button
+        android:id="@+id/imageEngage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="image engage"/>
 
     <Button
         android:id="@+id/newSession"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:text="new Session"/>
+
+    <Button
+        android:id="@+id/newUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="new user"/>
+
+    <Button
+        android:id="@+id/stopSDK"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+    android:text="stop sdk"/>
 
 </LinearLayout>
