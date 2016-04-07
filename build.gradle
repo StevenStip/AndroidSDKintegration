@@ -15,8 +15,8 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
-        //maven { url 'http://deltadna.bintray.com/android' }
-        maven { url 'http://edinlin01:8082/artifactory/libs-snapshot-local' }
+        maven { url 'http://deltadna.bintray.com/android' }
+        //maven { url 'http://edinlin01:8082/artifactory/libs-snapshot-local' }
     }
 }
 
