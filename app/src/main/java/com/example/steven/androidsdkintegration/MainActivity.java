@@ -56,9 +56,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d(TAG, "record simple event");
                 DDNA.instance().recordEvent(
-                        new Event("options")
-                                .putParam("action", "click")
-                                .putParam("option", "uselessButton")
+                        new Event("missionStarted")
+                                .putParam("missionName", "Mission01")
+                                .putParam("missionID", "M001")
+                                .putParam("isTutorial", false)
+                                .putParam("missionDifficulty", "EASY")
                 );
                 textLabel.setText("options event recorded");
             }
@@ -120,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "Simple engage");
                 DDNA.instance().requestEngagement(new Engagement("testDecisionPoint")
                                 .putParam("action", "simple"),
-                        new simpleEngagementListener(textLabel));
+                        new SimpleEngagementListener(textLabel));
                 String userId = DDNA.instance().getUserId();
                 Log.d(TAG, "SDK started with userID " + userId);
                 textLabel.setText("SDK started with userId: " + userId);
@@ -133,10 +135,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "Param engage");
                 DDNA.instance().requestEngagement(new Engagement("testDecisionPoint")
                                 .putParam("action", "param"),
-                        new paramEngagementListener(textLabel));
-                String userId = DDNA.instance().getUserId();
-                Log.d(TAG, "SDK started with userID " + userId);
-                textLabel.setText("SDK started with userId: " + userId);
+                        new ParamEngagementListener(textLabel));
             }
         });
 
@@ -150,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
                         new ImageMessageListener(MainActivity.this, 10) {
                             @Override
                             public void onFailure(Throwable throwable) {
-
+                                Log.w(TAG, "Requesting Engagement Failed");
                             }
 
                             @Override

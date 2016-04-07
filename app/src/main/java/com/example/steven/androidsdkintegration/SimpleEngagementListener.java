@@ -11,18 +11,20 @@ import org.json.JSONObject;
 /**
  * Created by steven on 22/03/16.
  */
-public class paramEngagementListener implements EngageListener {
+public class SimpleEngagementListener implements EngageListener {
+    String TAG = "SimpleEngagementListener";
     private TextView label;
 
-    //pass in the label to give user feedback
-    public paramEngagementListener(TextView label){
+    public SimpleEngagementListener(TextView label){
         this.label = label;
     }
 
-    String TAG = "paramEngagementListener";
     public void onSuccess(JSONObject result){
         try {
-            label.setText(result.getJSONObject("parameters").toString());
+            Log.d(TAG, result.toString(4));
+            String message = result.getString("heading")+"-"+result.getString("message");
+            label.setText(message);
+            Log.d(TAG, message);
             Log.d(TAG, result.toString(4));
         } catch (JSONException e) {
             e.printStackTrace();
@@ -31,6 +33,7 @@ public class paramEngagementListener implements EngageListener {
 
 
     public void onFailure(Throwable e){
-        Log.e(TAG,e.getMessage());
+        Log.i(TAG,e.getMessage());
     }
+
 }
