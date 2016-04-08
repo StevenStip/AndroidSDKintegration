@@ -13,6 +13,7 @@ import com.deltadna.android.sdk.Event;
 import com.deltadna.android.sdk.ImageMessage;
 import com.deltadna.android.sdk.Product;
 import com.deltadna.android.sdk.Transaction;
+import com.deltadna.android.sdk.ads.DDNASmartAds;
 import com.deltadna.android.sdk.listeners.ImageMessageListener;
 
 import org.json.JSONException;
@@ -38,6 +39,17 @@ public class MainActivity extends AppCompatActivity {
         Button simpleEngageButton = (Button) findViewById(R.id.simpleEngage);
         Button paramEngageButton = (Button) findViewById(R.id.paramEngage);
         Button imageEngageButton = (Button) findViewById(R.id.imageEngage);
+        Button smartAdsButton = (Button) findViewById(R.id.smartAds);
+
+
+        smartAdsButton.setOnClickListener(new View.OnClickListener() {
+                                              @Override
+                                              public void onClick(View v) {
+                                                  if(DDNASmartAds.instance().isInterstitialAdAvailable()) {
+                                                      DDNASmartAds.instance().showInterstitialAd();
+                                                  }
+                                              }
+                                          });
 
 
         startSdkButton.setOnClickListener(new View.OnClickListener() {
@@ -45,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d(TAG, "startSDK");
                 DDNA.instance().startSdk();
+                DDNASmartAds.instance().registerForAds(MainActivity.this);
                 String userId = DDNA.instance().getUserId();
                 Log.d(TAG, "SDK started with userID " + userId);
                 textLabel.setText("SDK started with userId: " + userId);
@@ -56,11 +69,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d(TAG, "record simple event");
                 DDNA.instance().recordEvent(
-                        new Event("missionStarted")
-                                .putParam("missionName", "Mission01")
-                                .putParam("missionID", "M001")
-                                .putParam("isTutorial", false)
-                                .putParam("missionDifficulty", "EASY")
+                        new Event("options")
+                                .putParam("action", "disable")
+                                .putParam("option", "music")
                 );
                 textLabel.setText("options event recorded");
             }
@@ -187,7 +198,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+        DDNASmartAds.instance().onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        DDNASmartAds.instance().onPause();
+    }
+
+    @Override
     public void onDestroy() {
+        DDNASmartAds.instance().onDestroy();
         DDNA.instance().stopSdk();
 
         super.onDestroy();

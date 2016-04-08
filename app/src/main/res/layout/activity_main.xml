@@ -64,6 +64,13 @@
         android:text="image engage"/>
 
     <Button
+        android:id="@+id/smartAds"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="smart ads"/>
+
+    <Button
         android:id="@+id/newSession"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -10,6 +10,7 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -24,4 +25,20 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.2.0'
     compile 'com.deltadna.android:deltadna-sdk:4.0.3'
+    compile 'com.deltadna.android:deltadna-smartads:1.0.3'
+
+// ad providers
+    compile 'com.deltadna.android:deltadna-smartads-provider-adcolony:1.0.3'
+    compile 'com.deltadna.android:deltadna-smartads-provider-admob:1.0.3'
+    compile 'com.deltadna.android:deltadna-smartads-provider-amazon:1.0.3'
+    compile 'com.deltadna.android:deltadna-smartads-provider-applovin:1.0.3'
+    compile 'com.deltadna.android:deltadna-smartads-provider-chartboost:1.0.3'
+    compile 'com.deltadna.android:deltadna-smartads-provider-flurry:1.0.3'
+    compile 'com.deltadna.android:deltadna-smartads-provider-inmobi:1.0.3'
+    compile 'com.deltadna.android:deltadna-smartads-provider-mobfox:1.0.3'
+    compile 'com.deltadna.android:deltadna-smartads-provider-mopub:1.0.3'
+    compile 'com.deltadna.android:deltadna-smartads-provider-supersonic:1.0.3'
+    compile 'com.deltadna.android:deltadna-smartads-provider-unity:1.0.3'
+    compile 'com.deltadna.android:deltadna-smartads-provider-vungle:1.0.3'
+
 }

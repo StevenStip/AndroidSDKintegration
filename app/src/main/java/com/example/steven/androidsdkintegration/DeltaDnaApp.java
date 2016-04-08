@@ -17,8 +17,8 @@ public class DeltaDnaApp extends Application {
         DDNA.initialise(new DDNA.Configuration(this, "22079697190426055695055037414340",
                         //"http://192.168.30.44:8080/collect/api",
                         //"http://192.168.30.44:8080/engage"
-                        "http://collect4792jmprb.deltadna.net/collect/api",
-                        "http://engage4792jmprb.deltadna.net"
+                        "http://collect7829tstcl.deltadna.net/collect/api",
+                        "http://engage7829tstcl.deltadna.net"
                 ).clientVersion("1.0")
                         .withSettings(new DDNA.SettingsModifier() {
                                           @Override
