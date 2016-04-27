@@ -24,6 +24,13 @@
         android:text="Start SDK"/>
 
     <Button
+        android:id="@+id/notifications"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="GCM register"/>
+
+    <Button
         android:id="@+id/simpleEvent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

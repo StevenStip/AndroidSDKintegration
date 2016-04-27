@@ -14,7 +14,9 @@ import com.deltadna.android.sdk.ImageMessage;
 import com.deltadna.android.sdk.Product;
 import com.deltadna.android.sdk.Transaction;
 import com.deltadna.android.sdk.ads.DDNASmartAds;
+import com.deltadna.android.sdk.ads.InterstitialAd;
 import com.deltadna.android.sdk.listeners.ImageMessageListener;
+import com.deltadna.android.sdk.notifications.DDNANotifications;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,16 +42,16 @@ public class MainActivity extends AppCompatActivity {
         Button paramEngageButton = (Button) findViewById(R.id.paramEngage);
         Button imageEngageButton = (Button) findViewById(R.id.imageEngage);
         Button smartAdsButton = (Button) findViewById(R.id.smartAds);
+        Button notificationsRegisterButton = (Button) findViewById(R.id.notifications);
+
 
 
         smartAdsButton.setOnClickListener(new View.OnClickListener() {
-                                              @Override
-                                              public void onClick(View v) {
-                                                  if(DDNASmartAds.instance().isInterstitialAdAvailable()) {
-                                                      DDNASmartAds.instance().showInterstitialAd();
-                                                  }
-                                              }
-                                          });
+            @Override
+            public void onClick(View v) {
+                InterstitialAd.create().show();
+            }
+        });
 
 
         startSdkButton.setOnClickListener(new View.OnClickListener() {
@@ -61,6 +63,16 @@ public class MainActivity extends AppCompatActivity {
                 String userId = DDNA.instance().getUserId();
                 Log.d(TAG, "SDK started with userID " + userId);
                 textLabel.setText("SDK started with userId: " + userId);
+            }
+        });
+        notificationsRegisterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "notificationsRegisterButton");
+                DDNANotifications.register(MainActivity.this);
+                String userId = DDNA.instance().getUserId();
+                Log.d(TAG, "SDK retrieved registrationID: " + DDNA.instance().getRegistrationId());
+                textLabel.setText("SDK retrieved registrationID: " + DDNA.instance().getRegistrationId());
             }
         });
 
@@ -80,19 +92,19 @@ public class MainActivity extends AppCompatActivity {
         complexEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    DDNA.instance().recordEvent(new Transaction(
-                                    "IAP an in app purchase",
-                                    "PURCHASE",
-                                    new Product().addItem("Aragorns sword", "sword", 1)
-                                            .addItem("Legolas bow", "bow", 1)
-                                            .addItem("Gimilis axe", "axe", 1)
-                                            .addVirtualCurrency("Golden ring", "PREMIUM", 1),
-                                    new Product().setRealCurrency("USD", 100))
-                    );
+                DDNA.instance().recordEvent(new Transaction(
+                        "IAP an in app purchase",
+                        "PURCHASE",
+                        new Product().addItem("Aragorns sword", "sword", 1)
+                                .addItem("Legolas bow", "bow", 1)
+                                .addItem("Gimilis axe", "axe", 1)
+                                .addVirtualCurrency("Golden ring", "PREMIUM", 1),
+                        new Product().setRealCurrency("USD", 100))
+                );
 
-                    Log.d(TAG, "record complex event");
+                Log.d(TAG, "record complex event");
 
-                    textLabel.setText("transaction event recorded");
+                textLabel.setText("transaction event recorded");
             }
         });
 
@@ -133,10 +145,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "Simple engage");
                 DDNA.instance().requestEngagement(new Engagement("testDecisionPoint")
                                 .putParam("action", "simple"),
-                        new SimpleEngagementListener(textLabel));
-                String userId = DDNA.instance().getUserId();
-                Log.d(TAG, "SDK started with userID " + userId);
-                textLabel.setText("SDK started with userId: " + userId);
+                        new DecisionPointOneEngagementListener(textLabel, null));
             }
         });
 
@@ -146,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "Param engage");
                 DDNA.instance().requestEngagement(new Engagement("testDecisionPoint")
                                 .putParam("action", "param"),
-                        new ParamEngagementListener(textLabel));
+                        new DecisionPointOneEngagementListener(textLabel, null));
             }
         });
 
@@ -155,34 +164,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "Image engage");
-                DDNA.instance().requestImageMessage(new Engagement("testDecisionPoint")
+                DDNA.instance().requestEngagement(new Engagement("testDecisionPoint")
                                 .putParam("action", "image"),
-                        new ImageMessageListener(MainActivity.this, 10) {
-                            @Override
-                            public void onFailure(Throwable throwable) {
-                                Log.w(TAG, "Requesting Engagement Failed");
-                            }
-
-                            @Override
-                            public void onSuccess(JSONObject result) {
-                                super.onSuccess(result);
-                                Log.d(TAG, "onSuccess: reached past parent");
-                                try {
-                                    Log.d(TAG, result.toString(4));
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-
-                            @Override
-                            protected void onPrepared(ImageMessage imageMessage) {
-                                show(imageMessage);
-                            }
-                        });
-
-                String userId = DDNA.instance().getUserId();
-                Log.d(TAG, "SDK started with userID " + userId);
-                textLabel.setText("SDK started with userId: " + userId);
+                        new DecisionPointOneEngagementListener(textLabel, MainActivity.this));
             }
         });
 
