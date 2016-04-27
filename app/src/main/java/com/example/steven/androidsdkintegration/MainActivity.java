@@ -15,6 +15,7 @@ import com.deltadna.android.sdk.Product;
 import com.deltadna.android.sdk.Transaction;
 import com.deltadna.android.sdk.ads.DDNASmartAds;
 import com.deltadna.android.sdk.ads.InterstitialAd;
+import com.deltadna.android.sdk.ads.RewardedAd;
 import com.deltadna.android.sdk.listeners.ImageMessageListener;
 import com.deltadna.android.sdk.notifications.DDNANotifications;
 
@@ -25,6 +26,8 @@ import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
     String TAG = "MainActivity";
+    private static String lastAdType;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,15 +48,24 @@ public class MainActivity extends AppCompatActivity {
         Button notificationsRegisterButton = (Button) findViewById(R.id.notifications);
 
 
-
+        assert smartAdsButton != null;
         smartAdsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                InterstitialAd.create().show();
+                if (lastAdType == "interstitial") {
+                    Log.d(TAG, "interstitial ad show");
+                    RewardedAd.create(new Engagement("ads")).show();
+                    lastAdType = "rewarded";
+                } else {
+                    Log.d(TAG, "rewarded ad show");
+                    InterstitialAd.create().show();
+                    lastAdType = "interstitial";
+                }
             }
         });
 
 
+        assert startSdkButton != null;
         startSdkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 textLabel.setText("SDK started with userId: " + userId);
             }
         });
+        assert notificationsRegisterButton != null;
         notificationsRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        assert simpleEventButton != null;
         simpleEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        assert complexEventButton != null;
         complexEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        assert upLoadEventsButton != null;
         upLoadEventsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        assert newSessionButton != null;
         newSessionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,17 +145,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        assert newUserButton != null;
         newUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "new user");
                 String userId = UUID.randomUUID().toString();
                 DDNA.instance().setUserId(userId);
-                Log.d(TAG, "New userId set to "+userId);
-                textLabel.setText("New userId set to "+userId);
+                Log.d(TAG, "New userId set to " + userId);
+                textLabel.setText("New userId set to " + userId);
             }
         });
 
+        assert simpleEngageButton != null;
         simpleEngageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,6 +168,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        assert paramEngageButton != null;
         paramEngageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -160,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        assert imageEngageButton != null;
         imageEngageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -171,6 +192,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        assert stopSDKButton != null;
         stopSDKButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
