@@ -1,4 +1,4 @@
-package com.example.steven.androidsdkintegration;
+package nl.klaukon.androidsdkintegration;
 
 import android.app.Activity;
 import android.util.Log;

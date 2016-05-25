@@ -1,4 +1,4 @@
-package com.example.steven.androidsdkintegration;
+package nl.klaukon.androidsdkintegration;
 
 import org.junit.Test;
 

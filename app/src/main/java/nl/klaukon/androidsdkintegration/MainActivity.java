@@ -1,4 +1,4 @@
-package com.example.steven.androidsdkintegration;
+package nl.klaukon.androidsdkintegration;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,17 +10,12 @@ import android.widget.TextView;
 import com.deltadna.android.sdk.DDNA;
 import com.deltadna.android.sdk.Engagement;
 import com.deltadna.android.sdk.Event;
-import com.deltadna.android.sdk.ImageMessage;
 import com.deltadna.android.sdk.Product;
 import com.deltadna.android.sdk.Transaction;
 import com.deltadna.android.sdk.ads.DDNASmartAds;
 import com.deltadna.android.sdk.ads.InterstitialAd;
 import com.deltadna.android.sdk.ads.RewardedAd;
-import com.deltadna.android.sdk.listeners.ImageMessageListener;
 import com.deltadna.android.sdk.notifications.DDNANotifications;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.UUID;
 
@@ -32,20 +27,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        final TextView textLabel = (TextView) findViewById(R.id.textLabel);
-        Button startSdkButton = (Button) findViewById(R.id.StartSDK);
-        Button simpleEventButton = (Button) findViewById(R.id.simpleEvent);
-        Button complexEventButton = (Button) findViewById(R.id.complexEvent);
-        Button upLoadEventsButton = (Button) findViewById(R.id.uploadEvents);
-        Button newSessionButton = (Button) findViewById(R.id.newSession);
-        Button newUserButton = (Button) findViewById(R.id.newUser);
-        Button stopSDKButton = (Button) findViewById(R.id.stopSDK);
-        Button simpleEngageButton = (Button) findViewById(R.id.simpleEngage);
-        Button paramEngageButton = (Button) findViewById(R.id.paramEngage);
-        Button imageEngageButton = (Button) findViewById(R.id.imageEngage);
-        Button smartAdsButton = (Button) findViewById(R.id.smartAds);
-        Button notificationsRegisterButton = (Button) findViewById(R.id.notifications);
+        setContentView(nl.klaukon.androidsdkintegration.R.layout.activity_main);
+        final TextView textLabel = (TextView) findViewById(nl.klaukon.androidsdkintegration.R.id.textLabel);
+        Button startSdkButton = (Button) findViewById(nl.klaukon.androidsdkintegration.R.id.StartSDK);
+        Button simpleEventButton = (Button) findViewById(nl.klaukon.androidsdkintegration.R.id.simpleEvent);
+        Button complexEventButton = (Button) findViewById(nl.klaukon.androidsdkintegration.R.id.complexEvent);
+        Button upLoadEventsButton = (Button) findViewById(nl.klaukon.androidsdkintegration.R.id.uploadEvents);
+        Button newSessionButton = (Button) findViewById(nl.klaukon.androidsdkintegration.R.id.newSession);
+        Button newUserButton = (Button) findViewById(nl.klaukon.androidsdkintegration.R.id.newUser);
+        Button stopSDKButton = (Button) findViewById(nl.klaukon.androidsdkintegration.R.id.stopSDK);
+        Button simpleEngageButton = (Button) findViewById(nl.klaukon.androidsdkintegration.R.id.simpleEngage);
+        Button paramEngageButton = (Button) findViewById(nl.klaukon.androidsdkintegration.R.id.paramEngage);
+        Button imageEngageButton = (Button) findViewById(nl.klaukon.androidsdkintegration.R.id.imageEngage);
+        Button smartAdsButton = (Button) findViewById(nl.klaukon.androidsdkintegration.R.id.smartAds);
+        Button notificationsRegisterButton = (Button) findViewById(nl.klaukon.androidsdkintegration.R.id.notifications);
 
 
         assert smartAdsButton != null;
@@ -53,12 +48,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (lastAdType == "interstitial") {
-                    Log.d(TAG, "interstitial ad show");
-                    RewardedAd.create(new Engagement("ads")).show();
+                    Log.d(TAG, "rewarded ad show");
+
+                    RewardedAd reward = RewardedAd.create(new Engagement("ads"));
+                    if (reward != null) {
+                        reward.show();
+                    }
+
                     lastAdType = "rewarded";
                 } else {
-                    Log.d(TAG, "rewarded ad show");
-                    InterstitialAd.create().show();
+                    Log.d(TAG, "interstitial ad show");
+                    InterstitialAd interstitial = InterstitialAd.create();
+                    if (interstitial != null) {
+                        interstitial.show();
+                    }
                     lastAdType = "interstitial";
                 }
             }
@@ -173,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "Param engage");
-                DDNA.instance().requestEngagement(new Engagement("testDecisionPoint")
+                DDNA.instance().requestEngagement(new Engagement("test")
                                 .putParam("action", "param"),
                         new DecisionPointOneEngagementListener(textLabel, null));
             }

@@ -1,7 +1,6 @@
-package com.example.steven.androidsdkintegration;
+package nl.klaukon.androidsdkintegration;
 
 import android.app.Application;
-import android.support.annotation.Nullable;
 
 import com.deltadna.android.sdk.DDNA;
 import com.deltadna.android.sdk.helpers.Settings;
@@ -17,8 +16,8 @@ public class DeltaDnaApp extends Application {
         DDNA.initialise(new DDNA.Configuration(this, "22079697190426055695055037414340",
                         //"http://192.168.30.44:8080/collect/api",
                         //"http://192.168.30.44:8080/engage"
-                        "http://collect7829tstcl.deltadna.net/collect/api",
-                        "http://engage7829tstcl.deltadna.net"
+                        "http://test-collect.deltadna.net/collect/api",
+                        "http://test-engage.deltadna.net"
                 ).clientVersion("1.0")
                         .withSettings(new DDNA.SettingsModifier() {
                                           @Override
