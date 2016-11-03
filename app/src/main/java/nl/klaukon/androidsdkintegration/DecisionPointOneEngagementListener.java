@@ -24,7 +24,7 @@ public class DecisionPointOneEngagementListener implements EngageListener {
         this.myActivity = myActivity;
     }
 
-    String TAG = "DecisionPointOneEngagementListener";
+    String TAG = "DPOneEngListener";
 
     @Override
     public void onCompleted(Engagement engagement) {
@@ -48,6 +48,11 @@ public class DecisionPointOneEngagementListener implements EngageListener {
         }
 
         JSONObject result = engagement.getJson();
+
+        if (result == null){
+            Log.w(TAG, "This decision point returned null.");
+            return;
+        }
 
         try {
             Log.d(TAG, result.toString(4));

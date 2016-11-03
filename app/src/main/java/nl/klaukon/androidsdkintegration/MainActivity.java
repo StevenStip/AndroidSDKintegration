@@ -120,6 +120,20 @@ public class MainActivity extends AppCompatActivity {
                         new Product().setRealCurrency("USD", 100))
                 );
 
+
+                int x = Product.convertCurrency(DDNA.instance(), "USD",8.56f);
+                Log.e(TAG, "CONVERTEDTHINGY USD: "+x);
+
+                x = Product.convertCurrency(DDNA.instance(), "JPY",105f);
+                Log.e(TAG, "CONVERTEDTHINGY JPY: "+x);
+
+                x = Product.convertCurrency(DDNA.instance(), "IDR",1050.00f);
+                Log.e(TAG, "CONVERTEDTHINGY IDR: "+x);
+
+                x = Product.convertCurrency(DDNA.instance(), "KWD",654.321f);
+                Log.e(TAG, "CONVERTEDTHINGY KWD: "+x);
+
+
                 Log.d(TAG, "record complex event");
 
                 textLabel.setText("transaction event recorded");
@@ -176,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "Param engage");
-                DDNA.instance().requestEngagement(new Engagement("test")
+                DDNA.instance().requestEngagement(new Engagement("testDecisionPoint")
                                 .putParam("action", "param"),
                         new DecisionPointOneEngagementListener(textLabel, null));
             }
