@@ -133,7 +133,6 @@ public class MainActivity extends AppCompatActivity {
                 x = Product.convertCurrency(DDNA.instance(), "KWD",654.321f);
                 Log.e(TAG, "CONVERTEDTHINGY KWD: "+x);
 
-
                 Log.d(TAG, "record complex event");
 
                 textLabel.setText("transaction event recorded");

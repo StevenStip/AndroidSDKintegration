@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "23.0.2"
+    buildToolsVersion '25.0.0'
     defaultConfig {
         applicationId 'nl.klaukon.androidsdkintegration'
         minSdkVersion 21
@@ -24,27 +24,27 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:25.0.0'
-    compile 'com.deltadna.android:deltadna-sdk:4.2.4'
-    //compile 'com.deltadna.android:deltadna-sdk-notifications:4.2.4'
-    compile('com.deltadna.android:deltadna-sdk-notifications:4.2.4') {
-        exclude module: 'play-services-gcm'
-    }
-    compile 'com.google.android.gms:play-services-gcm:9.8.0'
-    compile 'com.deltadna.android:deltadna-smartads:1.2.2'
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.deltadna.android:deltadna-sdk:4.3.0'
+    compile('com.deltadna.android:deltadna-sdk-notifications:4.3.0')
+    compile 'com.google.firebase:firebase-messaging:10.2.1'
 
-// ad providers
-    compile 'com.deltadna.android:deltadna-smartads-provider-adcolony:1.2.2'
-    compile 'com.deltadna.android:deltadna-smartads-provider-admob:1.2.2'
-    compile 'com.deltadna.android:deltadna-smartads-provider-amazon:1.2.2'
-    compile 'com.deltadna.android:deltadna-smartads-provider-applovin:1.2.2'
-    compile 'com.deltadna.android:deltadna-smartads-provider-chartboost:1.2.2'
-    compile 'com.deltadna.android:deltadna-smartads-provider-flurry:1.2.2'
-    compile 'com.deltadna.android:deltadna-smartads-provider-inmobi:1.2.2'
-    compile 'com.deltadna.android:deltadna-smartads-provider-mobfox:1.2.2'
-    compile 'com.deltadna.android:deltadna-smartads-provider-mopub:1.2.2'
-    compile 'com.deltadna.android:deltadna-smartads-provider-supersonic:1.2.2'
-    compile 'com.deltadna.android:deltadna-smartads-provider-unity:1.2.2'
-    compile 'com.deltadna.android:deltadna-smartads-provider-vungle:1.2.2'
-    compile 'com.google.android.gms:play-services-maps:8.4.0'
+    //smartads
+    compile 'com.deltadna.android:deltadna-smartads:1.4.0'
+
+    // ad providers
+    compile 'com.deltadna.android:deltadna-smartads-provider-adcolony:1.4.0'
+    compile 'com.deltadna.android:deltadna-smartads-provider-admob:1.4.0'
+    compile 'com.deltadna.android:deltadna-smartads-provider-amazon:1.4.0'
+    compile 'com.deltadna.android:deltadna-smartads-provider-applovin:1.4.0'
+    compile 'com.deltadna.android:deltadna-smartads-provider-chartboost:1.4.0'
+    compile 'com.deltadna.android:deltadna-smartads-provider-facebook:1.4.0'
+    compile 'com.deltadna.android:deltadna-smartads-provider-flurry:1.4.0'
+    compile 'com.deltadna.android:deltadna-smartads-provider-inmobi:1.4.0'
+    compile 'com.deltadna.android:deltadna-smartads-provider-ironsource:1.4.0'
+    compile 'com.deltadna.android:deltadna-smartads-provider-mobfox:1.4.0'
+    compile 'com.deltadna.android:deltadna-smartads-provider-mopub:1.4.0'
+    compile 'com.deltadna.android:deltadna-smartads-provider-thirdpresence:1.4.0'
+    compile 'com.deltadna.android:deltadna-smartads-provider-unity:1.4.0'
+    compile 'com.deltadna.android:deltadna-smartads-provider-vungle:1.4.0'
 }

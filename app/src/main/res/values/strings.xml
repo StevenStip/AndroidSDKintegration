@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">androidSDKintegration</string>
     <string name="sender_id">343795771918</string>
+    <string name="application_id">application_id</string>
 </resources>
