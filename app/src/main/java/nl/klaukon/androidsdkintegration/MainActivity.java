@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.deltadna.android.sdk.DDNA;
@@ -27,6 +28,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        DDNA.instance().startSdk();
+
         setContentView(nl.klaukon.androidsdkintegration.R.layout.activity_main);
         final TextView textLabel = (TextView) findViewById(nl.klaukon.androidsdkintegration.R.id.textLabel);
         Button startSdkButton = (Button) findViewById(nl.klaukon.androidsdkintegration.R.id.StartSDK);
@@ -41,9 +45,18 @@ public class MainActivity extends AppCompatActivity {
         Button imageEngageButton = (Button) findViewById(nl.klaukon.androidsdkintegration.R.id.imageEngage);
         Button smartAdsButton = (Button) findViewById(nl.klaukon.androidsdkintegration.R.id.smartAds);
         Button notificationsRegisterButton = (Button) findViewById(nl.klaukon.androidsdkintegration.R.id.notifications);
+        final Switch consentSwitch = (Switch) findViewById(R.id.consentSwitch);;
+
+        assert consentSwitch != null;
+        consentSwitch.setOnClickListener(new View.OnClickListener() {
+                                             @Override
+                                             public void onClick(View v) {
+                                             }
+                                         }
+            );
 
 
-        assert smartAdsButton != null;
+                assert smartAdsButton != null;
         smartAdsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d(TAG, "startSDK");
                 DDNA.instance().startSdk();
-                DDNASmartAds.instance().registerForAds(MainActivity.this);
                 String userId = DDNA.instance().getUserId();
                 Log.d(TAG, "SDK started with userID " + userId);
                 textLabel.setText("SDK started with userId: " + userId);
@@ -152,6 +164,9 @@ public class MainActivity extends AppCompatActivity {
         newSessionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                DDNASmartAds.instance().getSettings()
+                        .setUserConsent(consentSwitch.isChecked());
+
                 Log.d(TAG, "new session");
                 String oldSessionId = DDNA.instance().getSessionId();
                 DDNA.instance().newSession();
@@ -167,7 +182,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d(TAG, "new user");
                 String userId = UUID.randomUUID().toString();
-                DDNA.instance().setUserId(userId);
+                DDNA.instance().stopSdk();
+                DDNA.instance().clearPersistentData();
+                DDNA.instance().startSdk(userId);
                 Log.d(TAG, "New userId set to " + userId);
                 textLabel.setText("New userId set to " + userId);
             }
@@ -219,25 +236,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        DDNASmartAds.instance().onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        DDNASmartAds.instance().onPause();
-    }
 
     @Override
     public void onDestroy() {
-        DDNASmartAds.instance().onDestroy();
         DDNA.instance().stopSdk();
-
         super.onDestroy();
     }
 
