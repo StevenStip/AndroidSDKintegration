@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.deltadna.android.sdk.DDNA;
 import com.deltadna.android.sdk.Engagement;
 import com.deltadna.android.sdk.Event;
+import com.deltadna.android.sdk.EventActionHandler;
 import com.deltadna.android.sdk.Product;
 import com.deltadna.android.sdk.Transaction;
 import com.deltadna.android.sdk.ads.DDNASmartAds;
@@ -48,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
         Button imageEngageButton = (Button) findViewById(R.id.imageEngage);
         Button smartAdsButton = (Button) findViewById(R.id.smartAds);
         Button notificationsRegisterButton = (Button) findViewById(R.id.notifications);
-        final CheckBox consentSwitch = (CheckBox) findViewById(R.id.adConsent);;
+        final CheckBox consentSwitch = (CheckBox) findViewById(R.id.adConsent);
+        ;
 
 
         consentSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -110,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         simpleEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,7 +121,10 @@ public class MainActivity extends AppCompatActivity {
                         new Event("options")
                                 .putParam("action", "disable")
                                 .putParam("option", "music")
-                );
+                ).add(new EventActionHandler.ImageMessageHandler(imageMessage -> {
+                    // the image message is already prepared so it will show instantly
+                    imageMessage.show(MainActivity.this, 0);
+                })).run();
                 textLabel.setText("options event recorded");
             }
         });
@@ -137,17 +143,17 @@ public class MainActivity extends AppCompatActivity {
                 );
 
 
-                int x = Product.convertCurrency(DDNA.instance(), "USD",8.56f);
-                Log.e(TAG, "CONVERTEDTHINGY USD: "+x);
+                int x = Product.convertCurrency(DDNA.instance(), "USD", 8.56f);
+                Log.e(TAG, "CONVERTEDTHINGY USD: " + x);
 
-                x = Product.convertCurrency(DDNA.instance(), "JPY",105f);
-                Log.e(TAG, "CONVERTEDTHINGY JPY: "+x);
+                x = Product.convertCurrency(DDNA.instance(), "JPY", 105f);
+                Log.e(TAG, "CONVERTEDTHINGY JPY: " + x);
 
-                x = Product.convertCurrency(DDNA.instance(), "IDR",1050.00f);
-                Log.e(TAG, "CONVERTEDTHINGY IDR: "+x);
+                x = Product.convertCurrency(DDNA.instance(), "IDR", 1050.00f);
+                Log.e(TAG, "CONVERTEDTHINGY IDR: " + x);
 
-                x = Product.convertCurrency(DDNA.instance(), "KWD",654.321f);
-                Log.e(TAG, "CONVERTEDTHINGY KWD: "+x);
+                x = Product.convertCurrency(DDNA.instance(), "KWD", 654.321f);
+                Log.e(TAG, "CONVERTEDTHINGY KWD: " + x);
 
                 Log.d(TAG, "record complex event");
 

@@ -17,7 +17,7 @@ public class DeltaDnaApp extends Application {
         DDNA.initialise(new DDNA.Configuration(this,
                         "00798022957667783424138442814546",
                         "https://collect7817gldtr.deltadna.net/collect/api",
-                        "https://engage7817gldtr.deltadna.net"
+                        "https://stage-engage.deltadna.net"
                 ).clientVersion("1.0"));
         DDNA.instance().getSettings().setDebugMode(true);
 
