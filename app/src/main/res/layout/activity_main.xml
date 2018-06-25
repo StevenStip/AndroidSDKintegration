@@ -15,7 +15,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Hello World!"
-        android:textSize="@dimen/activity_horizontal_margin" />
+        android:textSize="10sp" />
+
+    <CheckBox
+        android:id="@+id/adConsent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ad Consent" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -25,12 +37,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <Switch
-                android:id="@+id/consentSwitch"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Consent" />
 
             <Button
                 android:id="@+id/StartSDK"
@@ -115,6 +121,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="new user" />
+
         </LinearLayout>
     </ScrollView>
 

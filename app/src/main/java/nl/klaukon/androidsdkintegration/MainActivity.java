@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -16,6 +18,7 @@ import com.deltadna.android.sdk.Transaction;
 import com.deltadna.android.sdk.ads.DDNASmartAds;
 import com.deltadna.android.sdk.ads.InterstitialAd;
 import com.deltadna.android.sdk.ads.RewardedAd;
+import com.deltadna.android.sdk.helpers.Settings;
 import com.deltadna.android.sdk.notifications.DDNANotifications;
 
 import java.util.UUID;
@@ -32,31 +35,33 @@ public class MainActivity extends AppCompatActivity {
         DDNA.instance().startSdk();
 
         setContentView(nl.klaukon.androidsdkintegration.R.layout.activity_main);
-        final TextView textLabel = (TextView) findViewById(nl.klaukon.androidsdkintegration.R.id.textLabel);
-        Button startSdkButton = (Button) findViewById(nl.klaukon.androidsdkintegration.R.id.StartSDK);
-        Button simpleEventButton = (Button) findViewById(nl.klaukon.androidsdkintegration.R.id.simpleEvent);
-        Button complexEventButton = (Button) findViewById(nl.klaukon.androidsdkintegration.R.id.complexEvent);
-        Button upLoadEventsButton = (Button) findViewById(nl.klaukon.androidsdkintegration.R.id.uploadEvents);
-        Button newSessionButton = (Button) findViewById(nl.klaukon.androidsdkintegration.R.id.newSession);
-        Button newUserButton = (Button) findViewById(nl.klaukon.androidsdkintegration.R.id.newUser);
-        Button stopSDKButton = (Button) findViewById(nl.klaukon.androidsdkintegration.R.id.stopSDK);
-        Button simpleEngageButton = (Button) findViewById(nl.klaukon.androidsdkintegration.R.id.simpleEngage);
-        Button paramEngageButton = (Button) findViewById(nl.klaukon.androidsdkintegration.R.id.paramEngage);
-        Button imageEngageButton = (Button) findViewById(nl.klaukon.androidsdkintegration.R.id.imageEngage);
-        Button smartAdsButton = (Button) findViewById(nl.klaukon.androidsdkintegration.R.id.smartAds);
-        Button notificationsRegisterButton = (Button) findViewById(nl.klaukon.androidsdkintegration.R.id.notifications);
-        final Switch consentSwitch = (Switch) findViewById(R.id.consentSwitch);;
-
-        assert consentSwitch != null;
-        consentSwitch.setOnClickListener(new View.OnClickListener() {
-                                             @Override
-                                             public void onClick(View v) {
-                                             }
-                                         }
-            );
+        final TextView textLabel = (TextView) findViewById(R.id.textLabel);
+        Button startSdkButton = (Button) findViewById(R.id.StartSDK);
+        Button simpleEventButton = (Button) findViewById(R.id.simpleEvent);
+        Button complexEventButton = (Button) findViewById(R.id.complexEvent);
+        Button upLoadEventsButton = (Button) findViewById(R.id.uploadEvents);
+        Button newSessionButton = (Button) findViewById(R.id.newSession);
+        Button newUserButton = (Button) findViewById(R.id.newUser);
+        Button stopSDKButton = (Button) findViewById(R.id.stopSDK);
+        Button simpleEngageButton = (Button) findViewById(R.id.simpleEngage);
+        Button paramEngageButton = (Button) findViewById(R.id.paramEngage);
+        Button imageEngageButton = (Button) findViewById(R.id.imageEngage);
+        Button smartAdsButton = (Button) findViewById(R.id.smartAds);
+        Button notificationsRegisterButton = (Button) findViewById(R.id.notifications);
+        final CheckBox consentSwitch = (CheckBox) findViewById(R.id.adConsent);;
 
 
-                assert smartAdsButton != null;
+        consentSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                DDNASmartAds.instance().getSettings()
+                        .setUserConsent(isChecked);
+                DDNA.instance().newSession();
+
+            }
+        });
+
+
         smartAdsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,18 +86,19 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        assert startSdkButton != null;
         startSdkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "startSDK");
                 DDNA.instance().startSdk();
                 String userId = DDNA.instance().getUserId();
+                DDNA.instance().getSettings().setDebugMode(true);
+
                 Log.d(TAG, "SDK started with userID " + userId);
                 textLabel.setText("SDK started with userId: " + userId);
             }
         });
-        assert notificationsRegisterButton != null;
+
         notificationsRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,7 +110,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        assert simpleEventButton != null;
         simpleEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,7 +123,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        assert complexEventButton != null;
         complexEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -151,7 +155,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        assert upLoadEventsButton != null;
         upLoadEventsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -160,7 +163,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        assert newSessionButton != null;
         newSessionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -176,7 +178,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        assert newUserButton != null;
         newUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -190,7 +191,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        assert simpleEngageButton != null;
         simpleEngageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -213,7 +213,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        assert imageEngageButton != null;
         imageEngageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -225,7 +224,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        assert stopSDKButton != null;
         stopSDKButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
