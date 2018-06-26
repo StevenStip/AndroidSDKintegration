@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
 
         DDNA.instance().startSdk();
 
+
+
         setContentView(nl.klaukon.androidsdkintegration.R.layout.activity_main);
         final TextView textLabel = (TextView) findViewById(R.id.textLabel);
         Button startSdkButton = (Button) findViewById(R.id.StartSDK);
@@ -49,13 +51,30 @@ public class MainActivity extends AppCompatActivity {
         Button imageEngageButton = (Button) findViewById(R.id.imageEngage);
         Button smartAdsButton = (Button) findViewById(R.id.smartAds);
         Button notificationsRegisterButton = (Button) findViewById(R.id.notifications);
-        final CheckBox consentSwitch = (CheckBox) findViewById(R.id.adConsent);
-        ;
+        final Switch adConsentSwitch  = (Switch) findViewById(R.id.adConsentSwitch);
+
+        adConsentSwitch.setChecked(DDNASmartAds.instance().getSettings().isUserConsent());
+
+        if (DDNASmartAds.instance().getSettings().isUserConsent()){
+            Log.d(TAG, "Has Consent at start");
+        }
+        else{
+            Log.d(TAG, "Dos not have Consent at start");
+        }
 
 
-        consentSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        adConsentSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if (DDNASmartAds.instance().getSettings().isUserConsent()){
+                    Log.d(TAG, "Has Consent");
+                }
+                else{
+                    Log.d(TAG, "Dos not have Consent");
+                }
+
+
                 DDNASmartAds.instance().getSettings()
                         .setUserConsent(isChecked);
                 DDNA.instance().newSession();
@@ -98,6 +117,8 @@ public class MainActivity extends AppCompatActivity {
 
                 Log.d(TAG, "SDK started with userID " + userId);
                 textLabel.setText("SDK started with userId: " + userId);
+                adConsentSwitch.setChecked(DDNASmartAds.instance().getSettings().isUserConsent());
+
             }
         });
 
@@ -140,7 +161,10 @@ public class MainActivity extends AppCompatActivity {
                                 .addItem("Gimilis axe", "axe", 1)
                                 .addVirtualCurrency("Golden ring", "PREMIUM", 1),
                         new Product().setRealCurrency("USD", 100))
-                );
+                ).add(new EventActionHandler.ImageMessageHandler(imageMessage -> {
+                    // the image message is already prepared so it will show instantly
+                    imageMessage.show(MainActivity.this, 1);
+                })).run();
 
 
                 int x = Product.convertCurrency(DDNA.instance(), "USD", 8.56f);
@@ -172,9 +196,6 @@ public class MainActivity extends AppCompatActivity {
         newSessionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DDNASmartAds.instance().getSettings()
-                        .setUserConsent(consentSwitch.isChecked());
-
                 Log.d(TAG, "new session");
                 String oldSessionId = DDNA.instance().getSessionId();
                 DDNA.instance().newSession();
@@ -189,6 +210,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d(TAG, "new user");
                 String userId = UUID.randomUUID().toString();
+                //userId = "8650f408-d6a9-4935-9b75-95a73e711650";
                 DDNA.instance().stopSdk();
                 DDNA.instance().clearPersistentData();
                 DDNA.instance().startSdk(userId);
@@ -236,6 +258,8 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "stop SDK");
                 DDNA.instance().stopSdk();
                 textLabel.setText("sdk Stopped");
+                adConsentSwitch.setChecked(DDNASmartAds.instance().getSettings().isUserConsent());
+
             }
         });
     }
